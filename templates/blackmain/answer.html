@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block title %}有问必答{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">    
+      <div class="content-block comment">
+        <h2 class="title"><strong>有问必答</strong></h2>
+        <div class="form-inline" id="comment-form">
+          {% csrf_token %}
+          <div class="comment-title"></div>
+          <div class="comment-form">
+            <textarea placeholder="向站长提出你的疑问" name="commentContent" id="question"></textarea>
+            <div class="comment-form-footer">
+              <div class="comment-form-text">请先 <a href="javascript:;">登录</a> 再提问 </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment submit_q">提交问题</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-content">
+          <ul>
+            {% for question in answer %}
+              <li><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>{{question.question_name}}</strong> ({{question.question_time}}) 提问：<br />
+                {{question.question_content}}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <script>
+		$(document).ready(function(){
+		 	$('.submit_q').click(function () {
+            // 获取用户名和密码
+                var question=$('#question').val();
+				var session='{{request.session.username}}';
+                if (session==''){
+                   alert("你未登录，请先登录！");
+                }
+                else{
+
+                    if(question==''){
+                        alert("提问内容不能为空！");
+
+                    }
+                    else{
+                         var params = {
+                            'twname': '{{request.session.username}}' ,
+                            'twcontent': question,
+                            'csrfmiddlewaretoken': '{{ csrf_token  }}',
+                        }
+                        $.post('http://127.0.0.1:8080/question', params, function (data) {
+                            if (data.res == 0){
+                                alert("提交成功");
+                                window.location.href ="http://127.0.0.1:8080/answer";
+                            }
+                            else
+                            {
+                                alert("提交失败");
+
+                            }
+                        });
+                    }
+                }
+			});
+
+		});
+
+
+	</script>
+      <div class="content-block new-content">
+        <h2 class="title"><strong>热门提问</strong></h2>
+        <div class="row">
+          <div class="news-list">
+            <div class="news-info col-xs-7 col-sm-7 col-md-8">
+              <dl>
+                <dt> <a href="" target="_blank" > 如何获取B币 </a> </dt>
+                <dd><span class="name"><a href="" title="由 jjl 发布" rel="author">jjl</a></span> <span class="identity"></span> <span class="time"> 2019-4-1 </span></dd>
+                <dd class="text">获取B币有多种方法，查看获取B币即可看到</dd>
+              </dl>
+              <div class="news_bot col-sm-7 col-md-8"> <span class="tags visible-lg visible-md"> <a href="">本站</a> <a href="">jjl</a> </span> <span class="look"> 共 <strong>2126</strong> 阅览 <strong> 12 </strong> 使用 </span> </div>
+            </div>
+          </div>
+          <div class="news-list">
+            <div class="news-info col-xs-7 col-sm-7 col-md-8">
+              <dl>
+                <dt> <a href="" target="_blank" >关于vip购买</a> </dt>
+                <dd><span class="name"><a href="" title="由 jj林 发布" rel="author">jj林</a></span> <span class="identity"></span> <span class="time"> 2019-4-1 </span></dd>
+                <dd class="text">购买vip即可终身下载本站所有资源</dd>
+              </dl>
+              <div class="news_bot col-sm-7 col-md-8"> <span class="tags visible-lg visible-md"> <a href="">本站</a> <a href="">jj林</a> </span> <span class="look"> 共 <strong>2126</strong> 阅览 <strong> 3</strong> 使用 </span> </div>
+            </div>
+          </div>
+          
+          
+        </div>
+ 
+        <div class="quotes" style="margin-top:15px"><span class="disabled">首页</span><span class="disabled">上一页</span><span class="current">1</span><a href="">2</a><a href="">下一页</a><a href="">尾页</a></div>
+      </div>
+    </div>
+  </div>
+{% endblock mainbody %}
+  <!--/内容-->
+{% block rightb %}
+  <aside class="sidebar visible-lg"><!--右侧>992px显示-->
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>2019年4月1日 星期一</h2>
+      <p>你是我人生中唯一的主角，我却只能是你故事中的一晃而过得路人甲。</p>
+    </div>
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>最近更新</strong></h2>
+      <ul>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有...</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有 ...</span> <span class="text-muted">阅读(2165)</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>最新评论</strong></h2>
+      <ul>
+        <li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="face"><img src="images/icon/icon.png" alt=""></span> <span class="text"><strong>小阳站长</strong> (2019-4-1) 说：<br />
+           欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="读者墙上的评论"><a target="_blank" href=""><span class="face"><img src="images/icon/icon.png" alt=""></span> <span class="text"><strong>jjl</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦...</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="jjl的评论"><a target="_blank" href=""><span class="face"><img src="images/icon/icon.png" alt=""></span> <span class="text"><strong>molin</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="摩天轮和将军令...的评论"><a target="_blank" href=""><span class="face"><img src="images/icon/icon.png" alt=""></span> <span class="text"><strong>小哥</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="小哥和JJ林·...的评论"><a target="_blank" href=""><span class="face"><img src="images/icon/icon.png" alt=""></span> <span class="text"><strong>哈哈</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+      </ul>
+    </div>
+  </aside>
+{% endblock rightb %}
+

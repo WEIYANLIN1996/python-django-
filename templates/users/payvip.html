@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>vip购买</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<link href="/static/css/style.css" type="text/css" rel="stylesheet">
+    <link type="text/css" href="/static/css/nprogress.css" rel="stylesheet">
+    <link type="text/css" href="/static/css/public.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/static/css/extend.css">
+</head>
+<body>
+	<div class="header_con">
+		<div class="header1">
+			<div class="welcome fl">欢迎来到Black学习社!</div>
+			<div class="fr">
+                {% if request.session.islogin %}
+                <div class="login_btn fl">
+                    欢迎您：<em>{{ request.session.username }}</em>
+                    <span>|</span>
+                    <a href="user/logout">退出</a>
+                    <span class="sp">|</span>
+                    <a href="http://127.0.0.1:8080/user/ucenter">用户中心</a>
+                </div>
+                {% else %}
+				<div class="login_btn fl">
+					<a href="http://127.0.0.1:8080/user/login">登录</a>
+					<span class="sp">|</span>
+					<a href="http://127.0.0.1:8080/user/register">注册</a>
+				</div>
+                {% endif %}
+				<div class="user_link fl">
+					<span class="sp">|</span>
+					<a href="http://127.0.0.1:8080/user/forget">忘记密码</a>
+				</div>
+			</div>
+		</div>
+    </div>
+    
+	<div class="search_bar clearfix">
+		<a href="http://127.0.0.1:8080" class="loll fl" style="width: 160px; height: 90px;margin: 0;"><img src="/static/images/logo.jpg" style="width: 160px; height: 90px;margin-left: 80px"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索资源">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="getcoin.html" class="cart_name fl">获取B币</a>
+			<div class="book_count fl" id="show_count">B</div>
+		</div>
+	</div>
+	<header class="ltHead" >
+		<div class="ltHead_cen">
+			<ul class="headNav">
+				<li><a href="http://127.0.0.1:8080">首页</a></li>
+				<li><a href="http://127.0.0.1:8080/goodclass">精品教程</a></li>
+				<li><a href="http://127.0.0.1:8080/bw">百度网盘教程资源</a></li>
+				<li><a href="http://127.0.0.1:8080/bcym">编程源码资源</a></li>
+				<li><a href="http://127.0.0.1:8080/answer">有问必答</a></li>
+				<li><a href="http://127.0.0.1:8080/getcoin">B币获取</a></li>
+				<li><a href="http://127.0.0.1:8080/enjoy">分享资源</a></li>
+				<li><a href="http://127.0.0.1:8080/vip">升级vip</a></li>
+			</ul>
+		</div>
+	</header>
+ 
+	<h3 class="common_title">支付方式</h3>	
+	<div class="common_list_con clearfix">
+		<div class="pay_style_con clearfix">
+			<input type="radio" name="pay_style">
+			<label class="weixin">微信支付</label>
+			<input type="radio" name="pay_style">
+			<label class="zhifubao"></label>
+		</div>
+		<div class="common_list_con clearfix">
+		<dl>
+			<dt>订单编号：</dt>
+			<dd><input type="radio" name="" checked="">c93442585s</dd>
+		</dl>
+	</div>
+	</div>
+
+	<h3 class="common_title">订单列表</h3>
+	<div class="common_list_con clearfix">
+		<ul class="book_list_th clearfix">
+			<li class="col01">商品名称</li>
+			<li class="col03">商品价格</li>
+			<li class="col04">数量</li>
+			<li class="col05">小计</li>		
+		</ul>
+		<ul class="book_list_td clearfix">
+			<li class="col01">1</li>			
+			<li class="col02"><img src="/static/images/bcoin.jpg"></li>
+			<li class="col03">Black学习社vip会员</li>
+			<li class="col05">20.00元</li>
+			<li class="col06">1</li>
+			<li class="col07">20.00元</li>	
+		</ul>
+	</div>
+
+	<h3 class="common_title">总金额结算</h3>
+
+	<div class="common_list_con clearfix">
+		<div class="settle_con">
+			<div class="total_book_count">共<em>1</em>件商品，总金额<b>20.00元</b></div>
+			<div class="total_pay">实付款：<b>20.00元</b></div>
+		</div>
+	</div>
+
+	<div class="order_submit clearfix">
+		<a href="javascript:;" id="order_btn">提交订单</a>
+	</div>	
+
+	<div class="footer">
+		<p>CopyRight © JJ林 All Rights Reserved</p>
+		<p>粤ICP备*******8号</p>
+	</div>
+
+	<div class="popup_con">
+		<div class="popup">
+			<p>订单提交成功！</p>
+		</div>
+		
+		<div class="mask"></div>
+	</div>
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+		$('#order_btn').click(function() {
+			$('.popup_con').fadeIn('fast', function() {
+				setTimeout(function(){
+					$('.popup_con').fadeOut('fast',function(){
+						window.location.href = 'http://127.0.0.1:8080/';
+					});	
+				},3000)
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}分享资源{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">   
+      <div class="content-block comment">
+        <h2 class="title"><strong>分享资源</strong></h2>
+        <form action="posts" method="post" class="form-inline" onsubmit="return zycheck()" id="comment-form">
+            {% csrf_token %}
+           <div class="comment-title">
+           	<div class="form-group">
+              <label for="commentName">资源主题</label>
+              <input type="text" name="title" class="form-control" id="commentName" placeholder="java教程">
+            </div>
+            <div class="form-group">
+              <label for="commentEmail">资源值B币数</label>
+              <input type="text" name="sourcevalue" class="form-control" id="value" placeholder="150">
+            </div>
+           </div>
+           <div class="comment-title">
+          	<div class="form-group">
+              <label for="commentName">资源图片</label>
+              <input type="file" id="test-image-file" name="sourceimg" accept="image/gif, image/jpeg, image/png, image/jpg">
+            </div>
+            <div class="form-group">
+              <label for="commentName">资源类型</label>
+              <select name="source_type" style="width:100px;eight:50px;">
+			    <option >百度网盘教程</option>
+			    <option >开源源码</option>
+			    <option >其他资源</option>
+			  </select>
+            </div>
+
+          </div>
+          <div class="comment-title">
+          	<div class="form-group">
+              <label for="commentName">百度网盘/开源地址链接</label>
+              <input type="text" name="source_bgurl" class="form-control" id="bgurl" placeholder="https://pan.baidu.com/share/init?surl=6EaDtk1xlFlPM_B_pr8cXA">
+            </div>
+            <div class="form-group">
+              <label for="commentEmail">网盘密码</label>
+              <input type="text" name="source_psw" style="width: 300px;" class="form-control" id="urlpsw" placeholder="">
+            </div>
+          </div>
+            <input type="hidden"  name="share_name"  value="{{request.session.username}}" >
+          <div class="comment-form">
+            <textarea placeholder="分享资源描述" name="sourcedsp"></textarea>
+            <div class="comment-form-footer">
+              <div class="comment-form-text">多谢您的分享 </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment enjoy">提交分享</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <script>
+      function zycheck(){
+        //var source_value = $('#source_value').text();
+        //var user_name = $('#username').val();
+        var title=$('#commentName').val();
+        var value=$('#value').val();
+        var bgurl=$('#bgurl').val();
+
+        var session='{{request.session.username}}';
+        if (session==''){
+           alert("你未登录，请先登录！");
+           return false;
+        }
+        else{
+            if (title==''){
+               alert("主题不能为空！");
+               return false;
+
+            }
+            else{
+               if (value==''){
+                   alert("资源价值不能为空！");
+                   return false;
+
+               }
+               else{
+                   if (bgurl==''){
+                        alert("资源连接不能为空！");
+                         return false;
+
+                   }
+                   else{
+                        alert("分享成功！");
+                        return true;
+                   }
+               }
+
+            }
+        }
+      }
+
+      </script>
+    </div>
+  </div>
+{% endblock mainbody %}
+  <!--/内容-->
+{% block rightb %}
+  <aside class="sidebar visible-lg"><!--右侧>992px显示-->
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>2019年4月1日 星期一</h2>
+      <p>你是我人生中唯一的主角，我却只能是你故事中的一晃而过得路人甲。</p>
+    </div>
+    <div id="search" class="sidebar-block search" role="search">
+      <h2 class="title"><strong style="color: #FF5151;">提醒</strong></h2>
+      <form class="navbar-form" action="" method="post">
+        <div class="input-group" style="color: blue;">
+                       分享前请检查资源是否可供分享，侵害版权！
+       </div>
+      </form>
+    </div>
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>最近更新</strong></h2>
+      <ul>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有...</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有 ...</span> <span class="text-muted">阅读(2165)</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>最新评论</strong></h2>
+      <ul>
+        <li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小阳站长</strong> (2019-4-1) 说：<br />
+           欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="读者墙上的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>jjl</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦...</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="jjl的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>molin</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="摩天轮和将军令...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小哥</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="小哥和JJ林·...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>哈哈</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+      </ul>
+    </div>
+  </aside>
+{% endblock rightb %}
+

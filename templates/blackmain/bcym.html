@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %}编程源码资源{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">   
+      <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>编程源码资源</strong></h2>
+			    <div id="row1" style="width: 100%;height: 150px;display: flex;">
+			        <div >
+			        	<a href="bw.html"><img src="/static/images/sqzy.png"></img></a>
+						    <p id="p1"><strong>百度网盘源码资源</strong></p>
+						    <p id="p2">资源数：10000</p>
+			        </div>
+			        <div >
+			        	<a href="seacher.html"><img src="/static/img/github.jpeg"></img></a>
+						    <p id="p1"><strong>github/中国开源源码</strong></p>
+						    <p id="p2">资源数：10000</p>
+			        </div>
+			        <div >
+			        	<a href="enjoy.html"><img src="/static/img/enjoy.jpg"></img></a>
+						    <p id="p1"><strong>发帖共享你的资源</strong></p>
+						    <p id="p2">贴数：5000</p>
+			        </div>
+			    </div>
+      </div>
+      <div class="content-block new-content">
+        <h2 class="title"><strong>热门资源</strong></h2>
+        <div class="row">
+          {% for contact in contacts %}
+            <div class="news-list">
+              <div class="news-img col-xs-5 col-sm-5 col-md-4"> <a target="_blank" href=""><img src="/static/images/logo.jpg" alt=""> </a> </div>
+              <div class="news-info col-xs-7 col-sm-7 col-md-8">
+                <dl>
+                  <dt> <a href="http:127.0.0.1:8080/other/source/?n={{contact.id}}&s=4566%{{contact.id}}7%38%54" target="_blank" > {{contact.title}} </a> </dt>
+                  <dd><span class="name"><a href="#" title="由 jjl 发布" rel="author">{{contact.share_name}}</a></span> <span class="identity"></span> <span class="time"> {{contact.tcreate_time}} </span></dd>
+                  <dd class="text">{{contact.content}}</dd>
+                </dl>
+                <div class="news_bot col-sm-7 col-md-8"> <span class="tags visible-lg visible-md"> <a href="">本站</a> <a href="">{{contact.share_name}}</a> </span> <span class="look"> 共 <strong>2126</strong> 查看<strong> 12 </strong> 使用  </span> </div>
+              </div>
+            </div>
+          {% endfor %}
+
+
+
+        </div>
+        <!--<div class="news-more" id="pagination">
+        	<a href="">查看更多</a>
+        </div>-->
+        <div class="quotes" style="margin-top:15px">
+          <a href="?page=1">首页</a>
+          {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+          {% endif %}
+
+            {% for  page_number in  paginator.page_range %}
+            {# 获取当前页的页码 #}
+                {% if page_number == page.number %}
+                    {# 如果是当前页的话，选中 #}
+                    <a href="?page={{page_number}}">{{page_number}}</a>
+                {% else %}
+                    <a href="?page={{page_number}}">{{page_number}}</a>
+                {% endif %}
+            {% endfor %}
+
+          {% if contacts.has_next %}
+              <a href="?page={{ contacts.next_page_number }}">下一页</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock mainbody %}
+  <!--/内容-->
+{% block rightb %}
+  <aside class="sidebar visible-lg"><!--右侧>992px显示-->
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>2019年4月1日 星期一</h2>
+      <p>你是我人生中唯一的主角，我却只能是你故事中的一晃而过得路人甲。</p>
+    </div>
+    <div id="search" class="sidebar-block search" role="search">
+      <h2 class="title"><strong style="color: #FF5151;">声明</strong></h2>
+      <form class="navbar-form" action="search.php" method="post">
+        <div class="input-group" style="color: blue;">
+                   本站资料均从互联网公开网盘收集或网页分享,若侵犯了您的版权，请联系我们qq:2097557613，我们会立刻删除！
+       </div>
+      </form>
+    </div>
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>最近更新</strong></h2>
+      <ul>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有...</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有 ...</span> <span class="text-muted">阅读(2165)</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>最新评论</strong></h2>
+      <ul>
+        <li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小阳站长</strong> (2019-4-1) 说：<br />
+           欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="读者墙上的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>jjl</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦...</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="jjl的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>molin</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="摩天轮和将军令...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小哥</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="小哥和JJ林·...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>哈哈</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+      </ul>
+    </div>
+  </aside>
+{% endblock rightb %}

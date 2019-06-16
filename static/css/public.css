@@ -1,0 +1,77 @@
+.ltHead{
+    width: 100%;
+    height: 45px;
+    background-color: dodgerblue;
+}
+.ltHead_cen{
+    width: 100%;
+    height: 60px;
+    margin: 0 auto;
+}
+.headPic1{
+    float: left;
+    margin-top: 10px;
+}
+.headNav{
+    float: left;
+    margin-left: 300px;
+}
+.headNav li{
+    float: left;
+    font-size: 14px;
+    text-align: center;
+    line-height: 50px;
+    margin-right: 20px;
+}
+.headNav li a{
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+}
+.ltForm{
+    width: 150px;
+    height: 60px;
+    float: right;
+}
+.headPic2{
+    margin-top: 15px;
+    float: left;
+}
+.ltForm ul{
+    float: left;
+    margin-left: 20px;
+}
+.ltForm ul li{
+    float: left;
+    line-height: 60px;
+    font-size: 14px;
+    margin-right: 20px;
+}
+.ltForm ul li a{
+    color: #fff;
+}
+.lt_login{
+    height: 60px;
+    float: right;
+    background: url("../img/loginMsg.png") no-repeat 0 center;
+}
+.lt_login ul{
+    margin-left: 30px;
+    
+}
+.lt_login li{
+    float: left;
+    line-height: 60px;
+    font-size: 14px;
+    margin-left: 20px;
+    text-indent: 20px;
+}
+.lt_login li:first-of-type{
+    background: url("../img/indexPerson.png") no-repeat 0 center;
+}
+.lt_login li:last-of-type{
+    background: url("../img/indexTc.png") no-repeat 0 center;
+}
+.lt_login li a{
+    color: #fff;
+}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}B币获取{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+ {% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">   
+      <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>B币获取</strong></h2>
+			    <div id="row1" style="width: 100%;height: 150px;display: flex;">
+			         <table class="table table-bordered">
+					    <thead>
+						<tr>
+						  <th>获取方法</th>
+						  <th>获取B币数</th>
+						  <th>可用次数</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+						  <td>购买终身vip</td>
+						  <td>20元终身VIP（可获取500000B币）*站长推荐(<a href="http://127.0.0.1:8080/vip" style="color: red;display: inline;">点击购买</a>)</td>
+						  <td>无数次</td>
+						</tr>
+						<tr>
+						  <td>注册</td>
+						  <td>50B币</td>
+						  <td>1次</td>
+						</tr>
+						<tr>
+						  <td>分享帖子，评论</td>
+						  <td>分享帖子20B币，所分享的资源被其他人下载也可获得分成。评论一次5B币</td>
+						  <td>不限次数</td>
+						</tr>
+
+						</tbody>
+					</table>
+			    </div>
+      </div>
+      <div class="content-block comment">
+        <h2 class="title"><strong>评论</strong></h2>
+        <div  class="form-inline" id="comment-form">
+            {% csrf_token %}
+          <div class="comment-title"></div>
+          <div class="comment-form">
+            <textarea placeholder="你的评论可以一针见血" name="commentContent" id="comment_content"></textarea>
+            <div class="comment-form-footer">
+              <div class="comment-form-text">请先 <a href="javascript:;">登录</a> 或 <a href="javascript:;">注册</a>，也可匿名评论 </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment">提交评论</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-content">
+          <ul>
+            {% for comment in zy_comment%}
+              <li><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>{{comment.comment_name}}</strong> ({{comment.comment_time}}) 说：<br />
+              {{comment.comment_content}}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+    $(document).ready(function(){
+        $('.btn-comment').click(function () {
+        // 获取用户名和密码
+            var session='{{request.session.username}}';
+            if (session==''){
+               alert("你未登录，请先登录！");
+
+            }
+            else{
+                var comment=$('#comment_content').val();
+                if(comment==''){
+                    alert("评论不能为空！");
+                    return false;
+                }
+                else{
+                     var params = {
+                        'source_id':'111111',
+                        'source_name': 'B币获取',
+                        'comment_sourcename':'站长',
+                        'comment_name':'{{request.session.username}}',
+                        'comment_content':comment,
+                        'csrfmiddlewaretoken': '{{ csrf_token  }}',
+                    }
+                    $.post('http://127.0.0.1:8080/comment', params, function (data) {
+                        if (data.res == 0){
+                            alert("评论成功");
+                            window.location.href ="http://127.0.0.1:8080/getcoin";
+                        }
+                        else
+                        {
+                            alert("评论失败");
+
+                        }
+                    });
+                }
+            }
+        });
+
+    });
+
+
+</script>
+ {% endblock mainbody %}
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Black学习社-注册</title>
+	<link rel="shortcut icon" href="/static/images/icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/static/css/reset2.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/register.js"></script>
+</head>
+<body>
+	<div class="header_con">
+		<div class="header1">
+			<div class="welcome fl">欢迎来到Black学习社!</div>
+			<div class="fr">
+				<div class="login_btn fl">
+					<a href="login.html">登录</a>
+					<span class="sp">|</span>
+					<a href="register.html">注册</a>
+				</div>
+				<div class="user_link fl">
+					<span class="sp">|</span>
+					<a href="user_center_info.html">用户中心</a>
+					<span class="sp">|</span>
+					<a href="user_center_order.html">忘记密码</a>
+				</div>
+			</div>
+		</div>		
+    </div>
+	<div class="register_con">
+		<div class="l_con fl">
+			<a class="reg_logo"><img src="/static/images/logo.jpg" style="width: 160px; height: 90px;"></a>
+			<div class="reg_slogan">无尽资源，Black学习社</div>
+			<div class="reg_banner"></div>
+		</div>
+
+		<div class="r_con fr">
+			<div class="reg_title clearfix">
+				<h1>用户注册</h1>
+				<a href="login">登录</a>
+			</div>
+			<div class="reg_form clearfix">
+				<form  action="http://127.0.0.1:8080/user/register" onsubmit="return check()"  method="post">
+					{% csrf_token %}
+					<ul>
+						<li>
+							<label>用户名:</label>
+							<input type="text" name="user_name" id="user_name">
+							<span class="error_tip">提示信息</span>
+						</li>
+						<li>
+							<label>密码:</label>
+							<input type="password" name="pwd" id="pwd">
+							<span class="error_tip">提示信息</span>
+						</li>
+						<li>
+							<label>确认密码:</label>
+							<input type="password" name="cpwd" id="cpwd">
+							<span class="error_tip">提示信息</span>
+						</li>
+						<li>
+							<label>邮箱:</label>
+							<input type="text" name="email" id="email">
+							<span class="error_tip">提示信息</span>
+						</li>
+						<li class="reg_sub">
+							<input type="submit" id="register" value="注 册" name="">
+							<p style="color:red;font-size:15px">{{errmsg}}</P>
+						</li>
+					</ul>
+				</form>
+			</div>
+        <script>
+			$(document).ready(function(){
+				function check() {
+				// 获取用户名和密码
+					var user_name=$('#user_name').val();
+					var pwd=$('#pwd').val();
+					var cpwd=$('#cpwd').val();
+					var email=$('#email').val();
+					if(user_name==''){
+						alert("用户名不能为空！");
+						return false;
+					}
+					else{
+						if(pwd==''){
+							alert("密码不能为空！");
+							return false;
+					    }
+					    else{
+					        if(cpwd==''){
+								alert("确认密码不能为空！");
+								return false;
+							}
+							else{
+							    if(email==''){
+									alert("邮箱不能为空！");
+									return false;
+								}
+								else{
+								    return true;
+								}
+
+							}
+
+					    }
+					}
+				}
+
+			});
+
+
+		</script>
+		</div>
+
+	</div>
+
+	<div class="footer no-mp">
+		<p>CopyRight ©jj林  All Rights Reserved</p>
+		<p>粤ICP备*******8号</p>
+	</div>
+	
+</body>
+</html>

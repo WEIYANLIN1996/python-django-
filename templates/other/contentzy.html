@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block title %}分享资源{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+
+{% block mainbody %}
+
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">     
+      <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>{{title}}</strong></h2>
+			    <div id="row2" style="width: 100%;height: 250px;display: flex;margin:0;padding: 0;">
+			        <div >
+			        	<a href="#" style="width: 100%;height: 100%;"><img src="/static/img/zydemo.jpg" style="width: 60%;height: 90%;border: 1px solid bisque;"></img></a>
+			        </div>
+			        <div style="margin:0;padding: 0;">
+						    <p id="p1" style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;"><strong>{{title}}</strong></p>
+                        <p id="p2" style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">所需B币：<span id="#source_value">{{source_valuemarks}}</span></p>
+						    <p id="p2" style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">兑换人数：{{load_nums}}</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">浏览人数：{{click_nums}}</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">市场价格：{{source_price}}</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">提醒：每人只能兑换一次</p>
+						    <button id="dh" style="width: 50%;height: 15%;margin: auto;font-size: 14px;background: red;color: white;">B币兑换</button>
+			        </div>			        
+			    </div>
+      </div>
+        <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>资源详情</strong></h2>
+		<div class="sourcexq">
+			<div>
+				<p>分享者：{{share_name}}</p>
+				<p>分享时间：{{share_time}}</p>
+				<p>资源id:<span id="source_id">{{source_id}}</span></p>
+			</div>
+		    <div>
+		    	<h2 class="title" style="font-size: 12px;"><strong>资源介绍：</strong></h2>
+		    	<p>{{content}}</p>
+		    </div>
+		    <div>
+		    	<h2 class="title" style="font-size: 12px;"><strong>网盘/开源地址</strong></h2>
+                {% for buycheck in buysource %}
+                    {% ifequal buycheck.user request.session.username %}
+                        <p id="bg">网盘/开源地址:<span id="bgurl">{{source_bgurl}}</span>      &nbsp;&nbsp;&nbsp;&nbsp密码：<span id="bgpsw">{{source_psw}}</span> </p>
+                    {% endifequal %}
+                {% endfor %}
+
+		    </div>
+		</div>
+
+      </div>
+      <script>
+      	$(document).ready(function(){
+			  $("#dh").click(function(){
+			  	var source_id = $('#source_id').text();
+                //var source_value = $('#source_value').text();
+                //var user_name = $('#username').val();
+                var session='{{request.session.username}}';
+                if (session==''){
+                   alert("你未登录，请先登录！");
+
+                }
+                else{
+                    var params = {
+                    'source_id': source_id,
+                    'source_value': '{{source_valuemarks}}',
+                    'user_name': '{{request.session.username}}',
+                    'csrfmiddlewaretoken': '{{ csrf_token  }}'
+                    };
+                    $.post("http://127.0.0.1:8080/other/buy",params,function(result){
+                        if (result.res==0){
+                            alert('购买成功');
+                            window.location.href ="http:127.0.0.1:8080/other/source/?n={{source_id}}&s=4566%{{source_id}}7%38%54";
+                        }
+                        if (result.res==1){
+                            alert('你已购买此资源');
+                            window.location.href ="http:127.0.0.1:8080/other/source/?n={{source_id}}&s=4566%{{source_id}}7%38%54";
+                        }
+                        if (result.res==2){
+                            alert('你的积分不足');
+                        }
+                        if (result.res==3){
+                            alert('购买失败');
+                        }
+                     });
+                }
+                console.log('{{request.session.username}}');
+
+			  });
+		});
+      </script>
+      <div class="content-block comment">
+        <h2 class="title"><strong>评论</strong></h2>
+        <div class="form-inline" id="comment-form">
+            {% csrf_token %}
+          <div class="comment-title"></div>
+          <div class="comment-form">
+            <textarea placeholder="你的评论可以一针见血" id="comment_content" name="comment_content"></textarea>
+              <input type="hidden"  name="source_id"  value="{{source_id}}" >
+              <input type="hidden"  name="source_name"  value="{{title}}" >
+              <input type="hidden"  name="comment_sourcename"  value="{{share_name}}" >
+              <input type="hidden" id="username"  name="comment_name"  value="{{request.session.username}}" >
+            <div class="comment-form-footer">
+              <div class="comment-form-text">请先 <a href="javascript:;">登录</a> 或 <a href="javascript:;">注册</a>，也可匿名评论 </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment">提交评论</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-content">
+          <ul>
+            {% for comment in zy_comment%}
+              <li><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>{{comment.comment_name}}</strong> ({{comment.comment_time}}) 说：<br />
+              {{comment.comment_content}}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{% endblock mainbody %}
+  <!--/内容-->
+{% block rightb %}
+  <aside class="sidebar visible-lg"><!--右侧>992px显示-->
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>2019年4月1日 星期一</h2>
+      <p>你是我人生中唯一的主角，我却只能是你故事中的一晃而过得路人甲。</p>
+    </div>
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>最近更新</strong></h2>
+      <ul>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有...</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有 ...</span> <span class="text-muted">阅读(2165)</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>最新评论</strong></h2>
+      <ul>
+        <li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小阳站长</strong> (2019-4-1) 说：<br />
+           欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="读者墙上的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>jjl</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦...</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="jjl的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>molin</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="摩天轮和将军令...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小哥</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="小哥和JJ林·...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>哈哈</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+      </ul>
+    </div>
+  </aside>
+<script>
+		$(document).ready(function(){
+		 	$('.btn-comment').click(function () {
+            // 获取用户名和密码
+                var session='{{request.session.username}}';
+                if (session==''){
+                   alert("你未登录，请先登录！");
+
+                }
+                else{
+
+
+                    var comment=$('#comment_content').val();
+                    if(comment==''){
+                        alert("评论不能为空！");
+                        return false;
+                    }
+                    else{
+                         var params = {
+                            'source_id':'{{source_id}}',
+                            'source_name': '{{title}}',
+                            'comment_sourcename':'{{share_name}}',
+                            'comment_name':'{{request.session.username}}',
+                            'comment_content':comment,
+                            'csrfmiddlewaretoken': '{{ csrf_token  }}',
+                        }
+                        $.post('http://127.0.0.1:8080/comment', params, function (data) {
+                            if (data.res == 0){
+                                alert("评论成功");
+                                window.location.href ="http://127.0.0.1:8080/other/source?n={{source_id}}&s=4566%{{source_id}}7%38%54";
+                            }
+                            else
+                            {
+                                alert("评论失败");
+
+                            }
+                        });
+                    }
+                }
+			});
+
+		});
+
+
+	</script>
+  <!--/右侧>992px显示-->
+ {% endblock rightb %}
+

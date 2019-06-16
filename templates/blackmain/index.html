@@ -1,0 +1,108 @@
+﻿{% extends 'base.html' %}
+{% block title %}首页{% endblock title %}
+
+{% block fdnav %}
+<div class="hidden-xs header"><!--超小屏幕不显示-->
+      <h1 class="logo"> <a href="index.html" title="Black学习社 -尽享学习资源"></a> </h1>
+      <ul class="nav hidden-xs-nav">
+        <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span>网站首页</a></li>
+        <li><a href="goodclass.html"><span class="glyphicon glyphicon-erase"></span>精品教程</a></li>
+        <li><a href="bw.html"><span class="glyphicon glyphicon-inbox"></span>百度网盘教程资源</a></li>
+        <li><a href="bcym.html"><span class="glyphicon glyphicon-globe"></span>编程源码资源</a></li>
+        <li><a href="answer.html"><span class="glyphicon glyphicon-user"></span>有问必答</a></li>
+        <li><a href="getcoin.html"><span class="glyphicon glyphicon-tags"></span>B币获取</a></li>
+        <li><a href="enjoy.html"><span class="glyphicon glyphicon-globe"></span>分享资源</a></li>
+      </ul>
+      <div class="feeds"> <a class="feed feed-xlweibo" href="" target="_blank"><i></i>新浪微博</a> <a class="feed feed-txweibo" href="" target="_blank"><i></i>腾讯微博</a> <a class="feed feed-rss" href="" target="_blank"><i></i>订阅本站</a> <a class="feed feed-weixin" data-toggle="popover" data-trigger="hover" title="微信扫一扫" data-html="true" data-content="<img src='/static/images/weixin.jpg' alt=''>" href="javascript:;" target="_blank"><i></i>关注微信</a> </div>
+</div>
+{% endblock fdnav %}
+
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> <!--banner-->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item active"> <a href="content.html" target="_blank"><img src="/static/images/py.png" alt="" /></a>
+            <div class="carousel-caption"> 欢迎来到Black学习社，在这里可以学习，下载，分享各种资源 </div>
+            <span class="carousel-bg"></span> </div>
+          <div class="item"> <a href="content.html" target="_blank"><img src="/static/images/block.jpg" alt="" /></a>
+            <div class="carousel-caption"> 欢迎来到Black学习社，在这里可以学习，下载，分享各种资源 </div>
+            <span class="carousel-bg"></span> </div>
+          <div class="item"> <a href="content.html" target="_blank"><img src="/static/images/javaweb.jpg" alt="" /></a>
+            <div class="carousel-caption"> 欢迎来到Black学习社，在这里可以学习，下载，分享各种资源 </div>
+            <span class="carousel-bg"></span> </div>
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div>
+      <!--/banner-->
+
+      <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>社区资源</strong></h2>
+			    <div id="row1" style="width: 100%;height: 150px;display: flex;">
+			        <div >
+			        	<a href="ey.html"><img src="/static/images/sqzy.png"></img></a>
+						    <p id="p1"><strong>百度网盘资源</strong></p>
+						    <p id="p2">贴数：10000</p>
+			        </div>
+			        <div >
+			        	<a href="ey.html"><img src="/static/images/sqzy.png"></img></a>
+						    <p id="p1"><strong>有问必答</strong></p>
+						    <p id="p2">贴数：1000</p>
+			        </div>
+			        <div >
+			        	<a href="ey.html"><img src="/static/images/sqzy.png"></img></a>
+						    <p id="p1"><strong>建议区</strong></p>
+						    <p id="p2">贴数：300</p>
+			        </div>
+			    </div>
+      </div>
+      <div class="content-block new-content">
+        <h2 class="title"><strong>热门资源</strong></h2>
+        <div class="row">
+         {% for contact in contacts %}
+          <div class="news-list">
+            <div class="news-img col-xs-5 col-sm-5 col-md-4"> <a target="_blank" href=""><img src="/static/images/logo.jpg" alt=""> </a> </div>
+            <div class="news-info col-xs-7 col-sm-7 col-md-8">
+              <dl>
+                <dt> <a href="http:127.0.0.1:8080/other/source/?n={{contact.id}}&s=4566%{{contact.id}}7%38%54" target="_blank" > {{contact.title}} </a> </dt>
+                <dd><span class="name"><a href="#" title="由 jjl 发布" rel="author">{{contact.share_name}}</a></span> <span class="identity"></span> <span class="time"> {{contact.tcreate_time}} </span></dd>
+                <dd class="text">{{contact.content}}</dd>
+              </dl>
+              <div class="news_bot col-sm-7 col-md-8"> <span class="tags visible-lg visible-md"> <a href="">本站</a> <a href="">{{contact.share_name}}</a> </span> <span class="look"> 共 <strong>2126</strong> 查看<strong> 12 </strong> 使用  </span> </div>
+            </div>
+          </div>
+         {% endfor %}
+        </div>
+        <!--<div class="news-more" id="pagination">
+        	<a href="">查看更多</a>
+        </div>-->
+        <div class="quotes" style="margin-top:15px">
+          <a href="?page=1">首页</a>
+          {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+          {% endif %}
+
+            {% for  page_number in  paginator.page_range %}
+            {# 获取当前页的页码 #}
+                {% if page_number == page.number %}
+                    {# 如果是当前页的话，选中 #}
+                    <a href="?page={{page_number}}">{{page_number}}</a>
+                {% else %}
+                    <a href="?page={{page_number}}">{{page_number}}</a>
+                {% endif %}
+            {% endfor %}
+
+          {% if contacts.has_next %}
+              <a href="?page={{ contacts.next_page_number }}">下一页</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock mainbody %}
+
+

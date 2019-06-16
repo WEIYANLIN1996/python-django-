@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}用户中心{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 100px;">
+      <div class="content-block hot-content hidden-xs" >
+        <h2 class="title"><strong>用户中心</strong></h2>
+			    <div id="row1" style="width: 100%;height: 120px;display:block;margin:0;padding: 0;">
+			        <div class="rowdc1" style="width: 100%;height: 120px;">
+			        	<a href="#" style="position:absolute;width:30%;height: 70%;"><img src="/static/images/logo.jpg" style="margin-left: 10px;"></img></a>
+			        	<p id="p1" style="position:absolute;display:block;width:100%;margin-left:120px;margin-top:10px;color: blue;font-size: 20px;">{{ request.session.username }}</p>
+			        	<p id="p2" style="position:absolute;width:100%;margin-left:120px;margin-top:40px; blue;font-size:14px;">注册时间：{{user_info.register_time}}</p>
+			        	<p id="p2" style="position:absolute;width:100%;margin-left:120px;margin-top:60px;blue;font-size:14px;">个人说明：{{user_info.description}}</p>
+			        </div>
+			    </div>
+      </div>
+      <div class="content-block new-content">
+        <h2 class="title" style="font-size: 15px;margin: 0;padding: 0;">
+        	<strong><a href="http://127.0.0.1:8080/user/ucenter">发表资源({{zynum}})</a></strong>
+        	&nbsp;&nbsp;<strong><a href="#">&nbsp;&nbsp;B币数({{user_info.user_allmarks}})</a></strong>
+        	&nbsp;&nbsp;<strong><a href="http://127.0.0.1:8080/user/info" style="color:red;">&nbsp;&nbsp;消息({{info_num}})</a></strong>
+        	&nbsp;&nbsp;<strong><a href="#">&nbsp;&nbsp;学习群(0)</a></strong>
+        </h2>
+        <div class="row">
+           <div class="list-group">
+               {%for x in info %}
+                    {% if x.read_sure %}
+                        <a href="inforead?num={{x.id}}" class="list-group-item" style="height:70px;">
+                            <h4 class="list-group-item-heading">
+                                   {{x.info_content}}
+                            </h4>
+                            <p class="list-group-item-text">
+                                   {{x.send_time}}
+                            </p>
+                        </a>
+                    {%else%}
+                        <a href="inforead?num={{x.id}}" class="list-group-item" style="height:70px;">
+                            <h4 class="list-group-item-heading">
+                                   {{x.info_content}}
+                            </h4>
+                            <p class="list-group-item-text">
+                                   {{x.send_time}}
+                            <span class="badge" style="color:red;">新</span>
+                            </p>
+                        </a>
+                    {%endif%}
+               {% endfor %}
+           </div>
+        </div>
+        <!--<div class="news-more" id="pagination">
+        	<a href="">查看更多</a>
+        </div>-->
+
+      </div>
+      <div class="content-block comment">
+        <h2 class="title"><strong>基本资料</strong></h2>
+        <div  class="form-inline" id="comment-form">
+            {% csrf_token  %}
+          <div class="comment-title">
+          	<div class="form-group">
+              <label for="commentName">用户id:{{ request.session.user_id }}</label>
+            </div>
+            <div class="form-group">
+              <label for="commentEmail">新用户名</label>
+              <input type="text" name="commentEmail" class="form-control" id="username" placeholder="hacker">
+            </div>
+          </div>
+          <div class="comment-title">
+          	<div class="form-group">
+              <label for="commentName">头像更改</label>
+              <input type="file" id="test-image-file" name="img" accept="image/gif, image/jpeg, image/png, image/jpg">
+            </div>
+          </div>
+          <div class="comment-form">
+            <textarea placeholder="个人说明" id="des" name="des"></textarea>
+            <div class="comment-form-footer">
+              <div class="comment-form-text">清理会话 <a href="http://127.0.0.1:8080/user/logout">登出</a> </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment">保存更改</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>
+    $(document).ready(function(){
+          $("#usermodify").click(function(){
+            var des = $('#des').val();
+            var user_name = $('#username').val();
+            var session='{{request.session.username}}';
+            if (session==''){
+               alert("你未登录，请先登录！");
+
+            }
+            if(user_name==''){
+               alert("新用户名未填！");
+
+            }
+            if(des==''){
+               alert("个人说明未填！");
+
+            }
+            else{
+                var params = {
+                'username': user_name,
+                'des': des,
+                'img': '1',
+                'csrfmiddlewaretoken': '{{ csrf_token  }}'
+                };
+                $.post("http://127.0.0.1:8080/user/usermodify",params,function(result){
+                    if (result.res==0){
+                        alert('修改成功');
+                        window.location.href ="http:127.0.0.1:8080/user/ucenter";
+                    }
+                    else{
+                        alert('修改失败');
+
+                    }
+
+                 });
+            }
+
+          });
+    });
+</script>
+{% endblock mainbody %}
+        <!--/内容-->
+{% block rightb %}
+  <aside class="sidebar visible-lg"><!--右侧>992px显示-->
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>2019年4月1日 星期一</h2>
+      <p>你是我人生中唯一的主角，我却只能是你故事中的一晃而过得路人甲。</p>
+    </div>
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>最近更新</strong></h2>
+      <ul>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有...</span> <span class="text-muted">阅读(2165)</span></a></li>
+        <li><a target="_blank" href=""> <span class="thumb"><img src="images/icon/icon.png" alt=""></span> <span class="text">Black学习社，各种学习资源，应有尽有 ...</span> <span class="text-muted">阅读(2165)</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>最新评论</strong></h2>
+      <ul>
+        <li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小阳站长</strong> (2019-4-1) 说：<br />
+           欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="读者墙上的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>jjl</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦...</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="jjl的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>molin</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="摩天轮和将军令...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>小哥</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+        <li data-toggle="tooltip" data-placement="top" title="小哥和JJ林·...的评论"><a target="_blank" href=""><span class="face"><img src="/static/images/icon/icon.png" alt=""></span> <span class="text"><strong>哈哈</strong> (2019-4-1) 说：<br />
+          欢迎来到Black学习社，在这里你可以获得各种学习资源，也可以分享你的资源哦</span></a></li>
+      </ul>
+    </div>
+  </aside>
+  <!--/右侧>992px显示-->
+ {% endblock rightb %}

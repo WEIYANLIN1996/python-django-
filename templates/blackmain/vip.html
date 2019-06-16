@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}升级vip{% endblock title %}
+{% block fdnav %}{% endblock fdnav %}
+
+{% block mainbody %}
+  <div class="content-wrap"><!--内容-->
+    <div class="content" style="margin-left: 50px;">     
+      <div class="content-block hot-content hidden-xs">
+        <h2 class="title"><strong>vip购买</strong></h2>
+			    <div id="row2" style="width: 100%;height: 250px;display: flex;margin:0;padding: 0;">
+			        <div >
+			        	<a href="#" style="width: 80%;height: 80%;"><img src="/static/images/bcoin.jpg" style="width: 60%;height: 90%;border: 1px solid bisque;"></img></a>
+			        </div>
+			        <div style="margin:0;padding: 0;">
+						    <p id="p1" style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;"><strong>终身vip</strong></p>
+						    <p id="p2" style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">所值B币：50000</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">已购人数：5000</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">价格：20.00</p>
+						    <p id="p2"style="width: 100%;height: 12%;font-size: 14px;margin:0;padding: 0;">说明：购买可终身享受本站所有资源</p>
+						    <button id="dh" style="width: 50%;height: 15%;margin: auto;font-size: 14px;background: red;color: white;">购买vip</button>
+			        </div>			        
+			    </div>
+      </div>
+	<script>
+		$(document).ready(function(){
+		 	$('#dh').click(function () {
+            // 获取用户名和密码
+                var session='{{request.session.username}}';
+                if (session==''){
+                   alert("你未登录，请先登录！");
+                }
+                else{
+                   window.location.href ="http://127.0.0.1:8080/user/pay";
+                }
+			});
+
+		});
+	</script>
+
+      <div class="content-block comment">
+        <h2 class="title"><strong>说明</strong></h2>
+        <div class="comment-content">
+          <p style="font-size: 16px;">
+			1.所有人员皆是本着自愿的原则购买vip，赞助本站，支持平台的运营，便于大家相互分享，不涉及任何商业利益行为。
+			
+			2.本站资源由网站粉丝投稿，版权归资源原创所有，仅供学习交流，请于下载学习后24小时内删除，如侵犯了你的权益，请及时联系以便本站及时删除。
+
+			温馨提示：以任何方式，赞助本站者，均视为同意 以上声明，否则，请自觉离开，谢谢合作。
+          </p>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+{% endblock mainbody %}
+

@@ -12,11 +12,11 @@ Black学习社<br>
 >>6.分享资源<br>
 >>7.升级vip<br>
 
-[Black学习社](http://blog.csdn.net/guodongxiaren)
+[Black学习社-项目部署网址](http://blog.csdn.net/guodongxiaren "项目部署网址链接")
 <br>
 
 *网站首页：<br>
-![image}(https://github.com/WEIYANLIN1996/python-django-/blob/master/static/images/360截图20190401171337531.jpg)
+![image](https://github.com/WEIYANLIN1996/python-django-/blob/master/static/images/360截图20190401171337531.jpg)
 
 
 *功能模块源码介绍<br>
